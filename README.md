@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-##Instruction
+## Instruction
 - Clone or download the repository
 - In the project folder, open a terminal
 - Check the presence of node `node -v`
@@ -15,11 +15,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Go on `http://localhost:3000/` to start the project
 - Test it
 
-##Media sample
-https://vimeo.com/353558438
-https://vimeo.com/76979871
-https://www.flickr.com/photos/flickr/51636887060/in/photostream/
-https://www.flickr.com/photos/flickr/51614787546/
+## Media sample
+- https://vimeo.com/353558438
+- https://vimeo.com/76979871
+- https://www.flickr.com/photos/flickr/51636887060/in/photostream/
+- https://www.flickr.com/photos/flickr/51614787546/
 
 ## Available Scripts
 
