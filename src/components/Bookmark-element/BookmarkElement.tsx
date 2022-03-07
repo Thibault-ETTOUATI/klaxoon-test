@@ -66,8 +66,7 @@ const BookmarkElement: FunctionComponent<Props> = ({ bookmark, onRemoveBookmark 
                 <img width="auto" height="auto" src={bookmark.thumbnail_url} alt="thumbnail"/>}
                 {bookmark.thumbnail_url && bookmark.type === MediaType.VIDEO &&
                 <iframe src={`https://player.vimeo.com/video/${extractVideoId}`} width="auto" height="auto"
-                        frameBorder="0" allow="autoplay; fullscreen" allowFullScreen />
-                }
+                        frameBorder="0" allow="autoplay; fullscreen" allowFullScreen title={bookmark.title}/>}
                 <div className={classes.elementMetadata}>
                     {bookmark.url && <div>{renderSpecificMetadata(GLOBAL.BOOKMARK.VIDEO_URL, bookmark.url)}</div>}
                     <div>{renderSpecificMetadata(GLOBAL.BOOKMARK.TITLE, bookmark.title)}</div>
