@@ -2,10 +2,24 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-##Instruction
+## Instruction
 - Clone or download the repository
-- 
+- In the project folder, open a terminal
+- Check the presence of node `node -v`
+- If necessary, install / update it
+- Check the presence of yarn `yarn -v`
+- If necessary, install / update it
+- Run `yarn` or `yarn install` to download the dependencies
+- Run `yarn start` to start the project
+- Open a browser
+- Go on `http://localhost:3000/` to start the project
+- Test it
 
+## Media sample
+- https://vimeo.com/353558438
+- https://vimeo.com/76979871
+- https://www.flickr.com/photos/flickr/51636887060/in/photostream/
+- https://www.flickr.com/photos/flickr/51614787546/
 
 ## Available Scripts
 
