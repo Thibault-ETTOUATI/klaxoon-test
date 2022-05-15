@@ -46,6 +46,11 @@ const BookmarkInput: FunctionComponent<Props> = ({
     setText("");
   };
 
+  // Function on text area change
+  const onTextChange = (newText: string): void => {
+    setText(newText);
+  };
+
   // Render
   return (
     <div className={classes.inputContainer}>
@@ -53,7 +58,7 @@ const BookmarkInput: FunctionComponent<Props> = ({
         className={classes.inputElement}
         value={text}
         placeholder={GLOBAL.BOOKMARK.INPUT_PLACEHOLDER}
-        onChange={(e) => setText(e.target.value)}
+        onChange={(e) => onTextChange(e.target.value)}
         type="text"
       />
       <Button onClick={onSubmit} type="primary" disabled={!text.trim().length}>
