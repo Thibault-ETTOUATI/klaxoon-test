@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, ReactElement } from "react";
 import { Bookmark } from "../../utils/types/BookmarksType";
 import BookmarkElement from "../Bookmark-element/BookmarkElement";
 
@@ -10,9 +10,9 @@ type Props = {
 const BookmarksList: FunctionComponent<Props> = ({
   bookmarksList,
   onRemoveBookmark,
-}: Props) => {
+}: Props): ReactElement => {
   // Render all bookmarks in a specific element
-  const renderBookmarksList = bookmarksList.map((bookmark) => {
+  const renderBookmarksList = bookmarksList.map((bookmark): ReactElement => {
     return (
       <BookmarkElement
         key={bookmark.id}

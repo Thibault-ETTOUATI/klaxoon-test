@@ -28,7 +28,7 @@ const BookmarksPage: FunctionComponent = () => {
   };
 
   // Sort the bookmark list from newest to oldest
-  const sortArrayFromNewestToOldest = (list: Bookmark[]) => {
+  const sortArrayFromNewestToOldest = (list: Bookmark[]): void => {
     list.sort((previous: Bookmark, next: Bookmark) =>
       previous.id < next.id ? 1 : -1
     );
@@ -54,11 +54,22 @@ const BookmarksPage: FunctionComponent = () => {
   };
 
   // Update bookmarks list by removing one
-  const onRemoveBookmark = (id: number) => {
+  const onRemoveBookmark = (id: number): void => {
     setBookmarksList(
       bookmarksList.filter((bookmark: Bookmark) => bookmark.id !== id)
     );
   };
+  /*  useEffect(() => {
+    const intervalID = setInterval(() => {
+      console.log("testw");
+      const newBookmarksList = [...bookmarksList];
+      newBookmarksList.forEach((bookmark) => {
+        return { ...bookmark, upload_date_on_app: Date.now() };
+      });
+      setBookmarksList(newBookmarksList);
+    }, 5000);
+    return () => clearInterval(intervalID);
+  }, []); */
 
   // Render
   return (

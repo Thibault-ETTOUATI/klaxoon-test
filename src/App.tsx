@@ -1,7 +1,8 @@
-import React from "react";
+import React, { FunctionComponent, ReactElement } from "react";
 import "./App.css";
 import { createUseStyles } from "react-jss";
 import BookmarksPages from "./components/Bookmarks-page/BookmarksPage";
+import logoKlaxoon from "./media/logo-klaxoon.png";
 
 const useStyles = createUseStyles({
   app: {
@@ -12,16 +13,13 @@ const useStyles = createUseStyles({
   },
 });
 
-const App = () => {
+const App: FunctionComponent = (): ReactElement => {
   const classes = useStyles();
 
+  // Render
   return (
     <div className={classes.app}>
-      <img
-        src="https://tedxsaclay.com/contents/content/7-actualites/20210304-klaxoon-l-outil-collaboratif-qui-booste-nos-idees/2_klaxoonlogo.png"
-        width={200}
-        alt="logo"
-      />
+      <img src={logoKlaxoon} width={200} alt="logo" />
       <BookmarksPages />
     </div>
   );

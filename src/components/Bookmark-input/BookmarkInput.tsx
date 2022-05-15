@@ -1,5 +1,6 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, ReactElement, useState } from "react";
 import { createUseStyles } from "react-jss";
+import { Button, Input } from "antd";
 import { GLOBAL } from "../../Constants";
 
 type Props = {
@@ -33,22 +34,31 @@ const useStyles = createUseStyles({
   },
 });
 
-const BookmarkInput: FunctionComponent<Props> = ({ onAddBookmark }: Props) => {
+const BookmarkInput: FunctionComponent<Props> = ({
+  onAddBookmark,
+}: Props): ReactElement => {
   const [text, setText] = useState<string>("");
   const classes = useStyles();
 
+  // Function on submit bookmark
+  const onSubmit = (): void => {
+    onAddBookmark(text);
+    setText("");
+  };
+
+  // Render
   return (
     <div className={classes.inputContainer}>
-      <input
+      <Input
         className={classes.inputElement}
         value={text}
         placeholder={GLOBAL.BOOKMARK.INPUT_PLACEHOLDER}
         onChange={(e) => setText(e.target.value)}
         type="text"
       />
-      <button onClick={() => onAddBookmark(text)} type="submit">
+      <Button onClick={onSubmit} type="primary" disabled={!text.trim().length}>
         {GLOBAL.BOOKMARK.VALIDATE}
-      </button>
+      </Button>
     </div>
   );
 };

@@ -1,8 +1,10 @@
 import * as React from "react";
-import { FunctionComponent } from "react";
+import { FunctionComponent, ReactElement, useEffect, useState } from "react";
 import { createUseStyles } from "react-jss";
+import { Button, Image } from "antd";
+import ReactPlayer from "react-player";
+import moment from "moment";
 import { Bookmark, MediaType } from "../../utils/types/BookmarksType";
-import TimeUtils from "../../utils/TimeUtils";
 import { GLOBAL } from "../../Constants";
 
 type Props = {
@@ -44,11 +46,16 @@ const useStyles = createUseStyles({
 const BookmarkElement: FunctionComponent<Props> = ({
   bookmark,
   onRemoveBookmark,
-}: Props) => {
+}: Props): ReactElement => {
+  const [lastUpdate, setLastUpdate] = useState<string>();
+
   const classes = useStyles();
 
   // render specific metadata
-  const renderSpecificMetadata = (title: string, value: string) => {
+  const renderSpecificMetadata = (
+    title: string,
+    value: string
+  ): ReactElement => {
     return (
       <div className={classes.specificMetadata}>
         <div className={classes.title}>{title}</div>
@@ -58,29 +65,20 @@ const BookmarkElement: FunctionComponent<Props> = ({
   };
 
   // Render bookmark's metadata
-  const renderMetadata = () => {
-    const start = Date.now();
-    const end = bookmark.upload_date_on_app;
+  const renderMetadata = (): ReactElement => {
     const extractVideoId = bookmark.url.split("vimeo.com/")[1];
 
     return (
       <div className={classes.elementPreview}>
         {bookmark.thumbnail_url && bookmark.type === MediaType.PHOTO && (
-          <img
-            width="auto"
-            height="auto"
-            src={bookmark.thumbnail_url}
-            alt="thumbnail"
-          />
+          <Image width="auto" height="auto" src={bookmark.thumbnail_url} />
         )}
         {bookmark.thumbnail_url && bookmark.type === MediaType.VIDEO && (
-          <iframe
-            src={`https://player.vimeo.com/video/${extractVideoId}`}
+          <ReactPlayer
+            url={`https://player.vimeo.com/video/${extractVideoId}`}
+            controls
             width="auto"
             height="auto"
-            frameBorder="0"
-            allow="autoplay; fullscreen"
-            allowFullScreen
             title={bookmark.title}
           />
         )}
@@ -103,18 +101,15 @@ const BookmarkElement: FunctionComponent<Props> = ({
             <div>
               {renderSpecificMetadata(
                 GLOBAL.BOOKMARK.UPLOAD_DATE,
-                TimeUtils.formatSecondsIntoHumanTimeString(bookmark.upload_date)
+                moment(new Date(bookmark.upload_date)).format(
+                  "MMMM Do YYYY, h:mm:ss a"
+                )
               )}
             </div>
           )}
-          {end && (
+          {lastUpdate && (
             <div>
-              {renderSpecificMetadata(
-                GLOBAL.BOOKMARK.ADD_DATE,
-                TimeUtils.formatTimeFromLastUpdate(
-                  Math.floor(-(end - start) / 1000)
-                )
-              )}
+              {renderSpecificMetadata(GLOBAL.BOOKMARK.ADD_DATE, lastUpdate)}
             </div>
           )}
           {bookmark.type === MediaType.PHOTO && (
@@ -129,7 +124,7 @@ const BookmarkElement: FunctionComponent<Props> = ({
             <div>
               {renderSpecificMetadata(
                 GLOBAL.BOOKMARK.DURATION,
-                TimeUtils.convertDurationIntoHMSFormat(bookmark.duration)
+                moment.utc(bookmark.duration * 1000).format("HH:mm:ss")
               )}
             </div>
           )}
@@ -138,15 +133,24 @@ const BookmarkElement: FunctionComponent<Props> = ({
     );
   };
 
+  // Update countdown
+  useEffect(() => {
+    const intervalID = setInterval(() => {
+      if (bookmark.upload_date_on_app) {
+        const est = moment(bookmark.upload_date_on_app).fromNow();
+        setLastUpdate(est);
+      }
+    }, 1000);
+    return () => clearInterval(intervalID);
+  }, []);
+
   // Render
   return (
     <div className={classes.elementContainer}>
       {renderMetadata()}
-      <div>
-        <button onClick={() => onRemoveBookmark(bookmark.id)} type="button">
-          Delete bookmark
-        </button>
-      </div>
+      <Button onClick={() => onRemoveBookmark(bookmark.id)} type="primary">
+        Delete bookmark
+      </Button>
     </div>
   );
 };
